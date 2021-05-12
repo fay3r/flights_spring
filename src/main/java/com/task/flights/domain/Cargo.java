@@ -15,7 +15,6 @@ import javax.persistence.Table;
 @NoArgsConstructor
 
 @Entity
-@Table(name = "cargo")
 class Cargo {
 
     @Id
@@ -43,3 +42,4 @@ class Cargo {
     }
 
 }
+

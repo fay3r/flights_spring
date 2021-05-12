@@ -16,7 +16,6 @@ import javax.persistence.Table;
 @NoArgsConstructor
 
 @Entity
-@Table(name ="flights")
 class Flight {
 
     @Id
