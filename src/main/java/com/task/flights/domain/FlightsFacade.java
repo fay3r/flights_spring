@@ -1,9 +1,7 @@
 package com.task.flights.domain;
 
 import com.task.flights.FlightsController;
-import com.task.flights.dto.BaggageDto;
-import com.task.flights.dto.CargoDto;
-import com.task.flights.dto.FlightDto;
+import com.task.flights.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +17,16 @@ public class FlightsFacade {
     private final FlightsRepository flightsRepository;
     private final CargoRepository cargoRepository;
     private final BaggageRepository baggageRepository;
+    private final CargoCalculator cargoCalculator;
+    private final AirportDetailsCalculator airportDetailsCalculator;
 
-    public FlightsFacade(FlightsRepository flightsRepository, BaggageRepository baggageRepository, CargoRepository cargoRepository) {
+    public FlightsFacade(FlightsRepository flightsRepository, BaggageRepository baggageRepository,
+                         CargoRepository cargoRepository, CargoCalculator cargoCalculator, AirportDetailsCalculator airportDetailsCalculator) {
         this.flightsRepository = flightsRepository;
         this.baggageRepository = baggageRepository;
         this.cargoRepository = cargoRepository;
+        this.cargoCalculator = cargoCalculator;
+        this.airportDetailsCalculator = airportDetailsCalculator;
     }
 
     public List<FlightDto> findFlights() {
@@ -40,6 +43,32 @@ public class FlightsFacade {
     public List<BaggageDto> findBaggage() {
         return baggageRepository.findAll().stream()
                 .map(Baggage::dto).collect(Collectors.toList());
+    }
 
+    public FlightDetailsDto findBaggageUsingFlightId(String flightNumber, String date) {
+        try {
+            FlightDto flight = flightsRepository.findByFlightNumberEqualsAndDepartureDateContains(Long.parseLong(flightNumber),date).dto();
+            List<BaggageDto> baggageDtos = baggageRepository.findByIdFlightEquals(flight.getId()).stream()
+                    .map(Baggage::dto).collect(Collectors.toList());
+            List<CargoDto> cargoDtos = cargoRepository.findByIdFlightEquals(flight.getId()).stream()
+                    .map(Cargo::dto).collect(Collectors.toList());
+            return cargoCalculator.countWeightOfCargos(baggageDtos,cargoDtos);
+        } catch (NullPointerException nPE){
+            LOGGER.info("No flight with this details");
+            return new FlightDetailsDto();
+        }
+    }
+
+    public AirportDetailsDto findAirportUsingCode(String airportCode, String date) {
+        try {
+            List<FlightDto> flights = flightsRepository.findByArrivalAirportCodeEqualsOrDepartureAirportCodeEquals(airportCode,airportCode)
+                    .stream().map(Flight::dto).collect(Collectors.toList());
+            AirportDetailsDto airportDetailsDto = airportDetailsCalculator.sumUpArrivalsAndDepartures(flights,airportCode);
+            airportDetailsDto = cargoCalculator.countPiecesOnFlight(flights, airportCode, airportDetailsDto);
+            return airportDetailsDto;
+        } catch (NullPointerException nPE){
+            LOGGER.info("No airport with this code");
+            return new AirportDetailsDto();
+        }
     }
 }

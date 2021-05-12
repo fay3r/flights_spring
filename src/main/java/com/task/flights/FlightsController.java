@@ -30,8 +30,15 @@ public class FlightsController {
     }
 
     @GetMapping("/flights/flight_details")
-    ResponseEntity getFlightDetails(@RequestParam("flightNumber") String flightNumber, @RequestParam("date") String date){
-        return new ResponseEntity(flightNumber +" " + date, HttpStatus.OK);
+    ResponseEntity getDetailsAboutFlight(@RequestParam("flightNumber") String flightNumber, @RequestParam("date") String date){
+
+        return new ResponseEntity(flightsFacade.findBaggageUsingFlightId(flightNumber,date), HttpStatus.OK);
+    }
+
+    @GetMapping("/flights/airport_detais")
+    ResponseEntity getDetailsAboutAirport(@RequestParam("airportCode") String airportCode, @RequestParam("date") String date){
+
+        return new ResponseEntity(flightsFacade.findAirportUsingCode(airportCode,date),HttpStatus.OK);
     }
 
     @GetMapping("/flights/cargo")
@@ -43,5 +50,10 @@ public class FlightsController {
     List<BaggageDto> getBag(){
         return flightsFacade.findBaggage();
     }
+
+//    @GetMapping("/flights/bagid")
+//    List<BaggageDto> getBagWithId(){
+//        return flightsFacade.findBaggageWithFlightId();
+//    }
 
 }
