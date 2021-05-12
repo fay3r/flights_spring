@@ -1,6 +1,6 @@
 package com.task.flights.domain;
 
-import com.task.flights.dto.CargoDto;
+import com.task.flights.dto.BaggageDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -15,12 +15,13 @@ import javax.persistence.Table;
 @NoArgsConstructor
 
 @Entity
-@Table(name = "cargo")
-class Cargo {
+@Table(name = "baggage")
+public class Baggage {
+
 
     @Id
-    @Column(name = "id_cargo")
-    private Long idCargo;
+    @Column(name = "id_baggage")
+    private Long idBaggage;
 
     @Column(name = "id_flight")
     private Long idFlight;
@@ -32,14 +33,12 @@ class Cargo {
 
     private Long pieces;
 
-    CargoDto dto() {
-        return CargoDto.builder()
-                .idCargo(this.idCargo)
+    BaggageDto dto() {
+        return BaggageDto.builder().idBaggage(this.idBaggage)
                 .idFlight(this.idFlight)
                 .pieces(this.pieces)
                 .weight(this.weight)
                 .weightUnit(this.weightUnit)
                 .build();
     }
-
 }

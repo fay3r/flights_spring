@@ -7,7 +7,9 @@ import org.springframework.context.annotation.Configuration;
 class FlightsConfiguration {
 
     @Bean
-    FlightsFacade flightsFacade(FlightsRepository flightsRepository){
-        return new FlightsFacade(flightsRepository);
+    FlightsFacade flightsFacade(FlightsRepository flightsRepository,
+                                BaggageRepository baggageRepository,
+                                CargoRepository cargoRepository ){
+        return new FlightsFacade(flightsRepository,baggageRepository,cargoRepository);
     }
 }

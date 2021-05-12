@@ -4,7 +4,10 @@ import com.task.flights.domain.FlightsFacade;
 import com.task.flights.dto.FlightDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,7 +24,13 @@ public class FlightsContoller {
 
     @GetMapping("/flights/all")
     List<FlightDto> getFlights(){
-        return flightsFacade.findAll();
+        return flightsFacade.findFlights();
+    }
+
+    @GetMapping("/flights/flight_details")
+    ResponseEntity getFlightDetails(@RequestParam("flightNumber") String flightNumber, @RequestParam("date") String date){
+        return new ResponseEntity(flightNumber +" " + date, HttpStatus.OK);
+
     }
 
 }

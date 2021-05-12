@@ -7,12 +7,11 @@ import lombok.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class CargoDto {
+public class BaggageDto {
 
-    private Long idCargo;
+    private Long idBaggage;
     private Long idFlight;
     private Long weight;
     private String weightUnit;
     private Long pieces;
-
 }

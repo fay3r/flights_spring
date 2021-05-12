@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FlightDto {
+
     private Long id;
     private Long flightNumber;
     private String departureAirportCode;
