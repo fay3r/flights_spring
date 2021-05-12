@@ -18,8 +18,9 @@ import javax.persistence.Table;
 @Table(name = "baggage")
 public class Baggage {
 
-
     @Id
+    private Long id;
+
     @Column(name = "id_baggage")
     private Long idBaggage;
 

@@ -18,6 +18,8 @@ import javax.persistence.Table;
 class Cargo {
 
     @Id
+    private Long id;
+
     @Column(name = "id_cargo")
     private Long idCargo;
 

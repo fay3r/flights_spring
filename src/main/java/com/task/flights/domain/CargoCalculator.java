@@ -8,7 +8,7 @@ import java.util.List;
 class CargoCalculator {
     private final double LB = 0.4536;
     private final String UNIT = "kg";
-    private final int PRECISION =2;
+    private final int PRECISION = 2;
 
     FlightDetailsDto countWeightOfCargos(List<BaggageDto> baggage, List<CargoDto> cargo) {
         Double cargoWeight, baggageWeight, totalWeight;
@@ -32,15 +32,35 @@ class CargoCalculator {
 
         totalWeight = cargoWeight + baggageWeight;
 
-        return new FlightDetailsDto(DoubleRounder.round(cargoWeight,PRECISION), DoubleRounder.round(baggageWeight,PRECISION),DoubleRounder.round(totalWeight,PRECISION),UNIT);
+        return new FlightDetailsDto(DoubleRounder.round(cargoWeight, PRECISION), DoubleRounder.round(baggageWeight, PRECISION), DoubleRounder.round(totalWeight, PRECISION), UNIT);
     }
 
-    public AirportDetailsDto countPiecesOnFlight(List<FlightDto> flights, String airportCode, AirportDetailsDto airportDetailsDto) {
-        Double arrivedPieces, departuredPieces;
+    public AirportDetailsDto countPiecesOnFlight(List<FlightDto> flights, List<BaggageDto> baggageDtos, List<CargoDto> cargoDtos, String airportCode) {
+        int arrivedPieces = 0;
+        int departurePieces = 0;
 
-       // arrivedPieces =
-
-
-        return airportDetailsDto;
+        for (FlightDto flightDto : flights) {
+            if (flightDto.getDepartureAirportCode().equals(airportCode)) {
+                arrivedPieces += baggageDtos.stream()
+                        .filter(f -> flightDto.getId() == f.getIdFlight())
+                        .map(b ->  b.getPieces())
+                        .reduce(0L, Long::sum);
+                arrivedPieces += cargoDtos.stream().
+                        filter(f -> flightDto.getId() == f.getIdFlight())
+                        .map(b ->  b.getPieces())
+                        .reduce(0L, Long::sum);
+            }
+            if (flightDto.getArrivalAirportCode().equals(airportCode)) {
+                departurePieces += baggageDtos.stream()
+                        .filter(f -> flightDto.getId() == f.getIdFlight())
+                        .map(b ->  b.getPieces())
+                        .reduce(0L, Long::sum);
+                departurePieces += cargoDtos.stream()
+                        .filter(f -> flightDto.getId() == f.getIdFlight())
+                        .map(b ->  b.getPieces())
+                        .reduce(0L, Long::sum);
+            }
+        }
+        return new AirportDetailsDto(0, 0, arrivedPieces, departurePieces);
     }
 }

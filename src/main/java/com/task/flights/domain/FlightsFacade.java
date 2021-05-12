@@ -63,8 +63,11 @@ public class FlightsFacade {
         try {
             List<FlightDto> flights = flightsRepository.findByArrivalAirportCodeEqualsOrDepartureAirportCodeEquals(airportCode,airportCode)
                     .stream().map(Flight::dto).collect(Collectors.toList());
-            AirportDetailsDto airportDetailsDto = airportDetailsCalculator.sumUpArrivalsAndDepartures(flights,airportCode);
-            airportDetailsDto = cargoCalculator.countPiecesOnFlight(flights, airportCode, airportDetailsDto);
+
+            List<BaggageDto> baggageDtos = baggageRepository.findAll().stream().map(Baggage::dto).collect(Collectors.toList());
+            List<CargoDto> cargoDtos = cargoRepository.findAll().stream().map(Cargo::dto).collect(Collectors.toList());
+            AirportDetailsDto airportDetailsDto = cargoCalculator.countPiecesOnFlight(flights, baggageDtos, cargoDtos, airportCode);
+            airportDetailsDto = airportDetailsCalculator.sumUpArrivalsAndDepartures(flights,airportCode,airportDetailsDto);
             return airportDetailsDto;
         } catch (NullPointerException nPE){
             LOGGER.info("No airport with this code");

@@ -7,6 +7,7 @@ import lombok.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class BaggageDto {
 
     private Long idBaggage;
