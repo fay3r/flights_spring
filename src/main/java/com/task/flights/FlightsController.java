@@ -7,7 +7,9 @@ import com.task.flights.dto.FlightDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,36 +26,16 @@ public class FlightsController {
         this.flightsFacade = flightsFacade;
     }
 
-    @GetMapping("/flights/all")
-    List<FlightDto> getFlights(){
-        return flightsFacade.findFlights();
-    }
-
-    @GetMapping("/flights/flight_details")
+    @CrossOrigin
+    @GetMapping(value = "/flights/flight_details", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseEntity getDetailsAboutFlight(@RequestParam("flightNumber") String flightNumber, @RequestParam("date") String date){
-
         return new ResponseEntity(flightsFacade.findBaggageUsingFlightId(flightNumber,date), HttpStatus.OK);
     }
 
-    @GetMapping("/flights/airport_detais")
+    @CrossOrigin
+    @GetMapping(value ="/flights/airport_details", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseEntity getDetailsAboutAirport(@RequestParam("airportCode") String airportCode, @RequestParam("date") String date){
-
         return new ResponseEntity(flightsFacade.findAirportUsingCode(airportCode,date),HttpStatus.OK);
     }
-
-    @GetMapping("/flights/cargo")
-    List<CargoDto> getCargo(){
-        return flightsFacade.findCargo();
-    }
-
-    @GetMapping("/flights/bagg")
-    List<BaggageDto> getBag(){
-        return flightsFacade.findBaggage();
-    }
-
-//    @GetMapping("/flights/bagid")
-//    List<BaggageDto> getBagWithId(){
-//        return flightsFacade.findBaggageWithFlightId();
-//    }
 
 }

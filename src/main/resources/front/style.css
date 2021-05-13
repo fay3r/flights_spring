@@ -1,0 +1,13 @@
+.container{
+    width: 100%;
+    margin:50px;
+}
+
+.fw-bolder{
+    text-align: center;
+    margin-bottom: 5%;
+}
+#tableForDetails{
+    margin: 50px;
+}
+

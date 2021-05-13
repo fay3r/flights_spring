@@ -40,7 +40,7 @@ class CargoCalculator {
         int departurePieces = 0;
 
         for (FlightDto flightDto : flights) {
-            if (flightDto.getDepartureAirportCode().equals(airportCode)) {
+            if (flightDto.getArrivalAirportCode().equals(airportCode)) {
                 arrivedPieces += baggageDtos.stream()
                         .filter(f -> flightDto.getId() == f.getIdFlight())
                         .map(b ->  b.getPieces())
@@ -50,7 +50,7 @@ class CargoCalculator {
                         .map(b ->  b.getPieces())
                         .reduce(0L, Long::sum);
             }
-            if (flightDto.getArrivalAirportCode().equals(airportCode)) {
+            if (flightDto.getDepartureAirportCode().equals(airportCode)) {
                 departurePieces += baggageDtos.stream()
                         .filter(f -> flightDto.getId() == f.getIdFlight())
                         .map(b ->  b.getPieces())

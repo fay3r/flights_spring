@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FLights</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+<body style="background-color: antiquewhite;">
+<div class="container">
+    <div class="row justify-content-evenly">
+        <div class="col-4">
+            <h1 class="fw-bolder">Flight details</h1>
+            <form>
+                <div class="mb-3">
+                    <label for="flightNumber" class="form-label">Flight Number</label>
+                    <input type="text" class="form-control" id="flightNumber" aria-describedby="flightHelp"
+                           placeholder="etc 5367">
+                    <div id="flightHelp" class="form-text">4 digit flight code</div>
+                </div>
+                <div class="mb-3">
+                    <label for="today" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="today" min="2021-01-01" max="2025-12-31" step="2">
+                </div>
+            </form>
+            <button id="findFlight" type="find" class="btn btn-primary" onClick="findFlightDetails()">Find Flight
+            </button>
+        </div>
+
+        <div class="col-4">
+            <h1 class="fw-bolder">Airport details</h1>
+            <form>
+                <div class="mb-3">
+                    <label for="airportCode" class="form-label">Airport Code</label>
+                    <input type="email" class="form-control" id="airportCode" aria-describedby="airportHelp"
+                           placeholder="etc KRK">
+                    <div id="airportHelp" class="form-text">3 letters airport code</div>
+                </div>
+                <div class="mb-3">
+                    <label for="today2" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="today2" min="2021-01-01" max="2025-12-31" step="2">
+                </div>
+            </form>
+            <button id="findAirport" type="find" class="btn btn-primary" onClick="findAirportDetails()">Find Airport
+            </button>
+        </div>
+    </div>
+    <div id="tableForDetails" class="table-responsive">
+    </div>
+</div>
+
+<script src="functions.js"></script>
+</body>
+</html>

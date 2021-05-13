@@ -56,6 +56,9 @@ public class FlightsFacade {
         } catch (NullPointerException nPE){
             LOGGER.info("No flight with this details");
             return new FlightDetailsDto();
+        } catch ( NumberFormatException nFE){
+            LOGGER.info("Bad input");
+            return new FlightDetailsDto();
         }
     }
 
