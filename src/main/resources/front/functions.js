@@ -22,7 +22,7 @@ function findAirportDetails() {
         .then(json => {
             let HTML
             if (json.numberOfArrives != 0 || json.numberOfDeparts != 0 || json.numberOfArrivedPieces != 0 || json.numberOfDepartedPieces != 0) {
-                HTML = "<p class=\"text-center\" style=\"font-size:15px\"><strong>Airport code: "+airportCode +"</strong></p>"
+                HTML = "<p class=\"text-center\" style=\"font-size:15px\"><strong>Airport code: " + airportCode + "</strong></p>"
                 HTML += "<p class=\"text-center\" style=\"font-size:15px\"><strong>Date: " + date + "</strong></p>"
                 HTML += "<table class=\"table table-sm\"><tr>";
                 HTML += "<th>Number of departures</th> <th>Number of arrivals</th> <th>Number Of Arrived Pieces</th> <th>Number Of Dep Pieces</th>";
@@ -56,7 +56,7 @@ function findFlightDetails() {
         .then(json => {
             let HTML;
             if (json.baggageWeight != null) {
-                HTML = "<p class=\"text-center\" style=\"font-size:15px\"><strong>Flight number: "+flightNumber +" </strong></p>"
+                HTML = "<p class=\"text-center\" style=\"font-size:15px\"><strong>Flight number: " + flightNumber + " </strong></p>"
                 HTML += "<p class=\"text-center\" style=\"font-size:15px\"><strong>Date: " + date + "</strong></p>"
                 HTML += "<table class=\"table table-sm\"><tr>";
                 HTML += "<th>Cargo Weight</th> <th>Baggage Weight</th> <th>Total Weight</th> <th>Weight Unit</th>";

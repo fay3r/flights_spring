@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AirportDetailsDto {
+
     private Integer numberOfDeparts;
     private Integer numberOfArrives;
     private Integer numberOfArrivedPieces;
