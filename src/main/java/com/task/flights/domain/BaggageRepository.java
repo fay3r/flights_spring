@@ -5,10 +5,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface BaggageRepository extends Repository<Baggage,Long> {
+public interface BaggageRepository extends Repository<Baggage, Long> {
 
     List<Baggage> findAll();
-    List<Baggage> findByIdFlightEquals(@Param("id_flight") Long idFlight);
 
+    List<Baggage> findByIdFlightEquals(@Param("id_flight") Long idFlight);
 
 }

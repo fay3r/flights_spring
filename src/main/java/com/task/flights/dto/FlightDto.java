@@ -1,6 +1,5 @@
 package com.task.flights.dto;
 
-
 import lombok.*;
 
 @Builder(toBuilder = true)

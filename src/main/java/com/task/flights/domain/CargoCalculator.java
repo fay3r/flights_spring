@@ -32,7 +32,12 @@ class CargoCalculator {
 
         totalWeight = cargoWeight + baggageWeight;
 
-        return new FlightDetailsDto(DoubleRounder.round(cargoWeight, PRECISION), DoubleRounder.round(baggageWeight, PRECISION), DoubleRounder.round(totalWeight, PRECISION), UNIT);
+        return FlightDetailsDto.builder()
+                .cargoWeight(DoubleRounder.round(cargoWeight, PRECISION))
+                .weightUnit(UNIT)
+                .baggageWeight(DoubleRounder.round(baggageWeight, PRECISION))
+                .totalWeight(DoubleRounder.round(totalWeight, PRECISION))
+                .build();
     }
 
     public AirportDetailsDto countPiecesOnFlight(List<FlightDto> flights, List<BaggageDto> baggageDtos, List<CargoDto> cargoDtos, String airportCode) {
@@ -43,24 +48,30 @@ class CargoCalculator {
             if (flightDto.getArrivalAirportCode().equals(airportCode)) {
                 arrivedPieces += baggageDtos.stream()
                         .filter(f -> flightDto.getId() == f.getIdFlight())
-                        .map(b ->  b.getPieces())
+                        .map(b -> b.getPieces())
                         .reduce(0L, Long::sum);
                 arrivedPieces += cargoDtos.stream().
                         filter(f -> flightDto.getId() == f.getIdFlight())
-                        .map(b ->  b.getPieces())
+                        .map(b -> b.getPieces())
                         .reduce(0L, Long::sum);
             }
             if (flightDto.getDepartureAirportCode().equals(airportCode)) {
                 departurePieces += baggageDtos.stream()
                         .filter(f -> flightDto.getId() == f.getIdFlight())
-                        .map(b ->  b.getPieces())
+                        .map(b -> b.getPieces())
                         .reduce(0L, Long::sum);
                 departurePieces += cargoDtos.stream()
                         .filter(f -> flightDto.getId() == f.getIdFlight())
-                        .map(b ->  b.getPieces())
+                        .map(b -> b.getPieces())
                         .reduce(0L, Long::sum);
             }
         }
-        return new AirportDetailsDto(0, 0, arrivedPieces, departurePieces);
+
+        return AirportDetailsDto.builder()
+                .numberOfArrivedPieces(arrivedPieces)
+                .numberOfDepartedPieces(departurePieces)
+                .numberOfArrives(0)
+                .numberOfDeparts(0)
+                .build();
     }
 }

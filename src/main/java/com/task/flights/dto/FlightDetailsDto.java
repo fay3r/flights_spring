@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FlightDetailsDto {
+
     private Double cargoWeight;
     private Double baggageWeight;
     private Double totalWeight;
